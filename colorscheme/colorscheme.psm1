@@ -60,13 +60,29 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact='Low')]
     Param(
         [Parameter(Mandatory=$false)]
-        [switch] $Dark,
+        [switch] $Help,
 
         [Parameter(Mandatory=$false)]
-        [switch] $Light,
+        [switch] $Current,
 
         [Parameter(Mandatory=$false)]
-        [switch] $d
+        [switch] $Quiet,
+
+        [Parameter(Mandatory=$false)]
+        [switch] $Both,
+
+        [Parameter(Mandatory=$false)]
+        [switch] $Schemes,
+
+        [Parameter(Mandatory=$false)]
+        [switch] $Version,
+
+        [Parameter(Mandatory=$false)]
+        [Alias("Output")]
+        [string] $OutputFile,
+
+        [Parameter(Mandatory=$false)]
+        [string] $Path = (Get-Item $PROFILE).Directory.FullName
     )
 
      Begin {
@@ -80,48 +96,55 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
                 $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
             }
             Write-Verbose ('[{0}] Confirm={1} ConfirmPreference={2} WhatIf={3} WhatIfPreference={4}' -f $MyInvocation.MyCommand, $Confirm, $ConfirmPreference, $WhatIf, $WhatIfPreference)
+
+            # $ColorTool = (Get-Item $PROFILE).Directory
+            write-verbose "$Path"
+            $ColorToolExe = "ColorTool.exe"
+            try {
+                Write-Verbose "Looking for ColorTool in $Path"
+                $ColorTool= Get-Command "$Path\$ColorToolExe" -ErrorAction Stop
+            } catch [System.Management.Automation.CommandNotFoundException] {
+                Write-Verbose 'Looking for ColorTool in $env:PATH'
+                $ColorTool= Get-Command "$ColorToolExe" -ErrorAction Stop
+            } Finally {
+                write-verbose $ColorTool.Path
+            }
+
+            if (Get-Command "$ColorToolExe" -ErrorAction Stop) {
+                $ColorToolExe = Get-Command "$ColorToolExe" | Resolve-Path
+                $ColorToolPath = (Get-Item $ColorToolExe).Directory
+                try {
+                    $ColorToolSchemes = Get-Item "$ColorToolPath\schemes" -ErrorAction Stop
+                } catch [System.Management.Automation.ItemNotFoundException] {
+                    Write-Verbose "$_.Exception.Message"
+                    Write-Verbose "ColorTool default location does not exist. Supply the full path to scheme files. See ColorTool --help"
+                }
+            }
         }
 
     Process
     {
-        If ($Dark) {
-            $ColorToolScheme = "$PSScriptRoot\Solarized Dark Higher Contrast.itermcolors"
-        }
-        ElseIf ($Light) {
-            $ColorToolScheme = "$PSScriptRoot\solarized_light.itermcolors"
-        }
-        Else {
-            $ColorToolScheme = "$PSScriptRoot\solarized_dark.itermcolors"
-        }
-        Write-Verbose "You selected for the current session:`n         $ColorToolScheme"
-        # $ColorTool = "C:\Users\fishe\Documents\GitHub\console\tools\ColorTool"
-        $ColorTool = "$PSScriptRoot"
-        # $ColorToolScheme = "$ColorTool\schemes\Solarized Dark Higher Contrast.itermcolors"
-        # $ColorToolScheme = "C:\Users\fishe\Documents\GitHub\iTerm2-Color-Schemes\schemes\Solarized Dark Higher Contrast.itermcolors"
+        & $ColorTool --schemes
+        # If ($Dark) {
+        #     $ColorToolScheme = "$PSScriptRoot\Solarized Dark Higher Contrast.itermcolors"
+        # }
+        # ElseIf ($Light) {
+        #     $ColorToolScheme = "$PSScriptRoot\solarized_light.itermcolors"
+        # }
+        # Else {
+        #     $ColorToolScheme = "$PSScriptRoot\solarized_dark.itermcolors"
+        # }
+        # Write-Verbose "You selected for the current session:`n         $ColorToolScheme"
 
-        $ColorToolExe = "$ColorTool\ColorTool.exe"
+        # & $ColorToolExe  $ColorToolScheme
 
-
-        & $ColorToolExe  $ColorToolScheme
-
-        If ($d) {
-            if ($PSCmdlet.ShouldProcess("Default Colorscheme")) {
-                Write-Verbose "Default updated to $ColorToolScheme`n Don't forget to save Defaults"
-                & $ColorToolExe  -d $ColorToolScheme
-            }
-        }
-
-        # Set-PSReadlineOption -ResetTokenColors
-        # Correct default tokens that don't change correctly for white background.
-        # if ($Light) {
-        #     $Colors = @{
-        #         ContinuationPrompt = 'Black'
-        #         Default = 'Black'
-        #         Type = 'DarkGray'
-        #         Member = 'Black'
-        #         Number = 'Black'
+        # If ($d) {
+        #     if ($PSCmdlet.ShouldProcess("Default Colorscheme")) {
+        #         Write-Verbose "Default updated to $ColorToolScheme`n Don't forget to save Defaults"
+        #         & $ColorToolExe  -d $ColorToolScheme
         #     }
-        #     Set-PSReadlineOption -Colors $Colors
         # }
     }
 }
+
+# Export-ModuleMember -Function Set-ColorScheme
