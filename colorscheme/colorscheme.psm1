@@ -59,14 +59,6 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
 #>
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='current')]
   param(
-    # Display help
-    [Parameter(Mandatory = $true,ParameterSetName='help')]
-    [switch]$Help,
-
-    # Display current color scheme
-    [Parameter(Mandatory = $true,ParameterSetName='current')]
-    [switch]$Current,
-
     [Parameter(Mandatory = $false,ParameterSetName='apply')]
     [Parameter(Mandatory = $false,ParameterSetName='xterm')]
     [switch]$Quiet,
@@ -80,17 +72,9 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     [Parameter(Mandatory = $true,ParameterSetName='xterm')]
     [switch]$Xterm,
 
-    # Display available color schemes
-    [Parameter(Mandatory = $true,ParameterSetName='schemes')]
-    [switch]$Schemes,
-
     # Display version
     [Parameter(Mandatory = $true,ParameterSetName='version')]
     [switch]$Version,
-
-    # Save current color scheme
-    [Parameter(Mandatory = $true,ParameterSetName='output')]
-    [string]$Output,
 
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='apply')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='default')]
@@ -136,19 +120,6 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
   }
 
   process {
-    if ($Help) {
-      Get-Help Set-ColorScheme
-      $Parameters = '--help'
-    } elseif ($Version) {
-      $Parameters = '--version'
-    } elseif ($Schemes) {
-      $Parameters = '--schemes'
-    } elseif ($Current) {
-      $Parameters = '--current'
-    } elseif ($SchemeName) {
-      $Parameters = "$SchemeName"
-    }
-
     if ($Quiet) {
       $Parameters = "--quiet $Parameters"
     }
@@ -164,8 +135,13 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
       $Parameters = "--defaults $Parameters"
     }
 
-      $Item = $ColorTool | Format-List | Out-String | write-verbose
+    $ColorTool | Format-List | Out-String | write-verbose
       write-verbose "Parameters: $Parameters"
+      if ($PSCmdlet.ShouldProcess("Change to color scheme: ${SchemeName}?")) {
+        & $ColorTool $(' ' + $Parameters).Split() "$SchemeName"
+      } else {
+        & $ColorTool $(' ' + $Parameters).Split() "$SchemeName"
+      }
   }
 }
 
@@ -260,20 +236,21 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     } elseif ($Current) {
       $Parameters = '--current'
     } elseif ($Output) {
-      $Parameters = "--output $Output"
+      $Parameters = '--output'
     }
 
     $ColorTool | Format-List | Out-String | write-verbose
       write-verbose "Parameters: $Parameters"
       if ($Output) {
         $OutputExists = Get-Item "$Output" -ErrorAction SilentlyContinue
-      }
-    if ($OutputExists -and $PSCmdlet.ShouldProcess("Overwrite ${Output}?")) {
-      write-verbose "Writing $Output."
+          if ($OutputExists -and $PSCmdlet.ShouldProcess("Overwrite ${Output}?")) {
+            write-verbose "Writing $Output."
+              & $ColorTool $Parameters.Split() "$Output"
+          } else {
+            & $ColorTool $Parameters.Split() "$Output"
+          }
+      } else {
         & $ColorTool $Parameters.Split()
-    } else {
-      & $ColorTool $Parameters.Split()
-    }
+      }
   }
 }
-
