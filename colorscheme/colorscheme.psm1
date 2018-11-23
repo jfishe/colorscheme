@@ -90,7 +90,7 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
 
     # Save current color scheme
     [Parameter(Mandatory = $true,ParameterSetName='output')]
-    [string]$OutputFile,
+    [string]$Output,
 
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='apply')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='default')]
@@ -189,7 +189,7 @@ Microsoft provides pre-built binaries or you can build from source. See RELATED 
 .Link
 https://github.com/Microsoft/console/tree/master/tools/ColorTool
 #>
-  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Low', PositionalBinding=$false, DefaultParametersetName='current')]
+  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false)]
   param(
     # Display help
     [Parameter(Mandatory = $true,ParameterSetName='help')]
@@ -198,19 +198,6 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     # Display current color scheme
     [Parameter(Mandatory = $true,ParameterSetName='current')]
     [switch]$Current,
-
-    [Parameter(Mandatory = $false,ParameterSetName='apply')]
-    [Parameter(Mandatory = $false,ParameterSetName='xterm')]
-    [switch]$Quiet,
-
-    [Parameter(Mandatory = $false,ParameterSetName='apply')]
-    [switch]$Both,
-
-    [Parameter(Mandatory = $true,ParameterSetName='default')]
-    [switch]$Defaults,
-
-    [Parameter(Mandatory = $true,ParameterSetName='xterm')]
-    [switch]$Xterm,
 
     # Display available color schemes
     [Parameter(Mandatory = $true,ParameterSetName='schemes')]
@@ -222,12 +209,7 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
 
     # Save current color scheme
     [Parameter(Mandatory = $true,ParameterSetName='output')]
-    [string]$OutputFile,
-
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='apply')]
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='default')]
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='xterm')]
-    [string]$SchemeName,
+    [string]$Output,
 
     [Parameter(Mandatory = $false)]
     [string]$Path = (Get-Item $PROFILE).Directory.FullName
@@ -277,26 +259,21 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
       $Parameters = '--schemes'
     } elseif ($Current) {
       $Parameters = '--current'
-    } elseif ($SchemeName) {
-      $Parameters = "$SchemeName"
+    } elseif ($Output) {
+      $Parameters = "--output $Output"
     }
 
-    if ($Quiet) {
-      $Parameters = "--quiet $Parameters"
-    }
-    if ($Both) {
-      $Parameters = "--both $Parameters"
-    }
-
-    if ($Xterm) {
-      $Parameters = "--xterm $Parameters"
-    }
-
-    if ($Defaults) {
-      $Parameters = "--defaults $Parameters"
-    }
-
-      $Item = $ColorTool | Format-List | Out-String | write-verbose
+    $ColorTool | Format-List | Out-String | write-verbose
       write-verbose "Parameters: $Parameters"
+      if ($Output) {
+        $OutputExists = Get-Item "$Output" -ErrorAction SilentlyContinue
+      }
+    if ($OutputExists -and $PSCmdlet.ShouldProcess("Overwrite ${Output}?")) {
+      write-verbose "Writing $Output."
+        & $ColorTool $Parameters.Split()
+    } else {
+      & $ColorTool $Parameters.Split()
+    }
   }
 }
+
