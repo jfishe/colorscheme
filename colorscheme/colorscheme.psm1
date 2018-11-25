@@ -41,34 +41,50 @@ function Set-ColorScheme
 {
 <#
 .Synopsis
-Set the console color scheme to dark or light and save color scheme to defaults
-if desired.
+Set console color scheme using Microsoft ColorTool
 
 .Description
-The default is dark without updating the console color scheme defaults.
+Change the current and/or default console color scheme using ColorTool.
 
-If -d is selected, the color scheme is written to the console defaults. To
-save the defaults for future sessions, select Properties and OK and select
-Defaults and OK from the console menu.
+Specify a colorscheme in INI or itermcolors format. The module assumes the
+color scheme is in the schemes/ directory installed with ColorTool, unless a
+path to the scheme is specified.
 
 .Notes
-Microsoft provides pre-built binaries or you can build from source. See RELATED LINKS.
+Microsoft provides pre-built ColorTool binaries or you can build from source.
+See RELATED LINKS. Install any additional schemes in the schemes/ folder
+included with ColorTool.
+
+The module assumes that ColorTool and schemes/ are installed in the same
+directory as $PROFILE or in $env:PATH.
 
 .Link
 https://github.com/Microsoft/console/tree/master/tools/ColorTool
 #>
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='current')]
   param(
+    # Suppress output of color scheme table.
     [Parameter(Mandatory = $false,ParameterSetName='apply')]
     [Parameter(Mandatory = $false,ParameterSetName='xterm')]
     [switch]$Quiet,
 
+    # Change current and default console color scheme.
+    #
+    # This does NOT save the properties automatically. For that, you'll need to
+    # open the properties sheet and hit "Ok".
     [Parameter(Mandatory = $false,ParameterSetName='apply')]
     [switch]$Both,
 
+    # Change default console color scheme.
+    #
+    # This does NOT save the properties automatically for the current console.
+    # For that, you'll need to open the properties sheet, select Defaults and
+    # hit "Ok".
     [Parameter(Mandatory = $true,ParameterSetName='default')]
     [switch]$Defaults,
 
+    # Change current color scheme and output ANSI escape sequences for use in
+    # WSL console.
     [Parameter(Mandatory = $true,ParameterSetName='xterm')]
     [switch]$Xterm,
 
@@ -76,11 +92,16 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     [Parameter(Mandatory = $true,ParameterSetName='version')]
     [switch]$Version,
 
+    # Change current console color scheme.
+    #
+    # This does NOT save the properties automatically. For that, you'll need to
+    # open the properties sheet and hit "Ok".
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='apply')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='default')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='xterm')]
     [string]$SchemeName,
 
+    # Specify path to ColorTool
     [Parameter(Mandatory = $false)]
     [string]$Path = (Get-Item $PROFILE).Directory.FullName
   )
@@ -149,18 +170,20 @@ function Get-ColorScheme
 {
 <#
 .Synopsis
-Set the console color scheme to dark or light and save color scheme to defaults
-if desired.
+Get current console color scheme using Microsoft ColorTool.
 
 .Description
-The default is dark without updating the console color scheme defaults.
+Display the current or available color schemes installed with ColorTool.
 
-If -d is selected, the color scheme is written to the console defaults. To
-save the defaults for future sessions, select Properties and OK and select
-Defaults and OK from the console menu.
+Output the current color scheme in ColorTool INI format.
 
 .Notes
-Microsoft provides pre-built binaries or you can build from source. See RELATED LINKS.
+Microsoft provides pre-built ColorTool binaries or you can build from source.
+See RELATED LINKS. Install any additional schemes in the schemes/ folder
+included with ColorTool.
+
+The module assumes that ColorTool and schemes/ are installed in the same
+directory as $PROFILE or in $env:PATH.
 
 .Link
 https://github.com/Microsoft/console/tree/master/tools/ColorTool
@@ -187,6 +210,7 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     [Parameter(Mandatory = $true,ParameterSetName='output')]
     [string]$Output,
 
+    # Specify path to ColorTool
     [Parameter(Mandatory = $false)]
     [string]$Path = (Get-Item $PROFILE).Directory.FullName
   )
