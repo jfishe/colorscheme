@@ -122,15 +122,6 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
       Write-Verbose ('Found {0}' -f $ColorTool.Path)
     }
 
-    if ($Schemes) {
-      try {
-        Write-Verbose "Looking for schemes in $Path\schemes"
-          $ColorToolSchemes = Get-Item ('{0}\schemes' -f $Path) -ErrorAction Stop
-      } catch [System.Management.Automation.ItemNotFoundException] {
-        Write-Verbose "$_.Exception.Message"
-          Write-Verbose "ColorTool default location does not exist. Supply the full path to scheme files. See ColorTool --help"
-      }
-    }
   }
 
   process {
@@ -240,7 +231,7 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
     if ($Schemes) {
       try {
         Write-Verbose "Looking for schemes in $Path\schemes"
-          $ColorToolSchemes = Get-Item ('{0}\schemes' -f $Path) -ErrorAction Stop
+          Get-Item ('{0}\schemes' -f $Path) -ErrorAction Stop | Out-String | Write-Verbose
       } catch [System.Management.Automation.ItemNotFoundException] {
         Write-Verbose "$_.Exception.Message"
           Write-Verbose "ColorTool default location does not exist. Supply the full path to scheme files. See ColorTool --help"
