@@ -46,16 +46,6 @@ Change the current and/or default console color scheme using ColorTool.
 Specify a colorscheme in INI or itermcolors format.
 The module assumes the color scheme is in the schemes/ directory installed with ColorTool, unless a path to the scheme is specified.
 
-## EXAMPLES
-
-### Example 1
-
-```powershell
-PS C:\> {{ Add example code here }}
-```
-
-{{ Add example description here }}
-
 ## PARAMETERS
 
 ### -Quiet
@@ -215,7 +205,7 @@ Accept wildcard characters: False
 ### CommonParameters
 
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
