@@ -46,59 +46,52 @@ Set console color scheme using Microsoft ColorTool
 .Description
 Change the current and/or default console color scheme using ColorTool.
 
-Specify a colorscheme in INI or itermcolors format. The module assumes the
-color scheme is in the schemes/ directory installed with ColorTool, unless a
-path to the scheme is specified.
+Specify a colorscheme in INI or itermcolors format. The module assumes the color scheme is in the schemes/ directory installed with ColorTool, unless a path to the scheme is specified.
 
 .Notes
-Microsoft provides pre-built ColorTool binaries or you can build from source.
-See RELATED LINKS. Install any additional schemes in the schemes/ folder
-included with ColorTool.
+Microsoft provides pre-built ColorTool binaries or you can build from source. See RELATED LINKS. Install any additional schemes in the schemes/ folder included with ColorTool.
 
-The module assumes that ColorTool and schemes/ are installed in the same
-directory as $PROFILE or in $env:PATH.
+The module assumes that ColorTool and schemes/ are installed in the same directory as $PROFILE or in $env:PATH.
+
+.Link
+https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md
 
 .Link
 https://github.com/Microsoft/console/tree/master/tools/ColorTool
 #>
-  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='current')]
+  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Apply')]
   param(
     # Suppress output of color scheme table.
-    [Parameter(Mandatory = $false,ParameterSetName='apply')]
-    [Parameter(Mandatory = $false,ParameterSetName='xterm')]
+    [Parameter(Mandatory = $false,ParameterSetName='Apply')]
+    [Parameter(Mandatory = $false,ParameterSetName='Xterm')]
     [switch]$Quiet,
 
     # Change current and default console color scheme.
     #
-    # This does NOT save the properties automatically. For that, you'll need to
-    # open the properties sheet and hit "Ok".
-    [Parameter(Mandatory = $false,ParameterSetName='apply')]
+    # This does NOT save the properties automatically. For that, you'll need to open the properties sheet and hit "Ok".
+    [Parameter(Mandatory = $false,ParameterSetName='Apply')]
     [switch]$Both,
 
     # Change default console color scheme.
     #
-    # This does NOT save the properties automatically for the current console.
-    # For that, you'll need to open the properties sheet, select Defaults and
-    # hit "Ok".
-    [Parameter(Mandatory = $true,ParameterSetName='default')]
+    # This does NOT save the properties automatically for the current console. For that, you'll need to open the properties sheet, select Defaults and hit "Ok".
+    [Parameter(Mandatory = $true,ParameterSetName='Defaults')]
     [switch]$Defaults,
 
-    # Change current color scheme and output ANSI escape sequences for use in
-    # WSL console.
-    [Parameter(Mandatory = $true,ParameterSetName='xterm')]
+    # Change current color scheme and output ANSI escape sequences for use in WSL console.
+    [Parameter(Mandatory = $true,ParameterSetName='Xterm')]
     [switch]$Xterm,
 
     # Display version
-    [Parameter(Mandatory = $true,ParameterSetName='version')]
+    [Parameter(Mandatory = $true,ParameterSetName='Version')]
     [switch]$Version,
 
     # Change current console color scheme.
     #
-    # This does NOT save the properties automatically. For that, you'll need to
-    # open the properties sheet and hit "Ok".
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='apply')]
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='default')]
-    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='xterm')]
+    # This does NOT save the properties automatically. For that, you'll need to open the properties sheet and hit "Ok".
+    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Apply')]
+    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Defaults')]
+    [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Xterm')]
     [string]$SchemeName,
 
     # Specify path to ColorTool
@@ -178,36 +171,38 @@ Display the current or available color schemes installed with ColorTool.
 Output the current color scheme in ColorTool INI format.
 
 .Notes
-Microsoft provides pre-built ColorTool binaries or you can build from source.
-See RELATED LINKS. Install any additional schemes in the schemes/ folder
-included with ColorTool.
+Microsoft provides pre-built ColorTool binaries or you can build from source. See RELATED LINKS. Install any additional schemes in the schemes/ folder included with ColorTool.
 
-The module assumes that ColorTool and schemes/ are installed in the same
-directory as $PROFILE or in $env:PATH.
+The module assumes that ColorTool and schemes/ are installed in the same directory as $PROFILE or in $env:PATH.
+
+.Link
+https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md
 
 .Link
 https://github.com/Microsoft/console/tree/master/tools/ColorTool
+
+
 #>
-  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false)]
+  [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Current')]
   param(
     # Display help
-    [Parameter(Mandatory = $true,ParameterSetName='help')]
+    [Parameter(Mandatory = $true,ParameterSetName='Help')]
     [switch]$Help,
 
     # Display current color scheme
-    [Parameter(Mandatory = $true,ParameterSetName='current')]
+    [Parameter(Mandatory = $false,ParameterSetName='Current')]
     [switch]$Current,
 
     # Display available color schemes
-    [Parameter(Mandatory = $true,ParameterSetName='schemes')]
+    [Parameter(Mandatory = $true,ParameterSetName='Schemes')]
     [switch]$Schemes,
 
     # Display version
-    [Parameter(Mandatory = $true,ParameterSetName='version')]
+    [Parameter(Mandatory = $true,ParameterSetName='Version')]
     [switch]$Version,
 
     # Save current color scheme
-    [Parameter(Mandatory = $true,ParameterSetName='output')]
+    [Parameter(Mandatory = $true,ParameterSetName='Output')]
     [string]$Output,
 
     # Specify path to ColorTool
@@ -216,6 +211,10 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
   )
 
   begin {
+    if ($PsCmdlet.ParameterSetName -eq 'Current') {
+      $Current = $true
+    }
+
     if (-not $PSBoundParameters.ContainsKey('Verbose')) {
       $VerbosePreference = $PSCmdlet.SessionState.PSVariable.GetValue('VerbosePreference')
     }
@@ -251,7 +250,7 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
 
   process {
     if ($Help) {
-      Get-Help Set-ColorScheme
+      Get-Help Get-ColorScheme
       $Parameters = '--help'
     } elseif ($Version) {
       $Parameters = '--version'
