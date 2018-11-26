@@ -58,8 +58,7 @@ Display help
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Help
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -74,8 +73,7 @@ Display current color scheme
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Current
-? Aliases
-
+Aliases:
 Required: False
 Position: Named
 Default value: False
@@ -90,8 +88,7 @@ Display available color schemes
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Schemes
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -106,8 +103,7 @@ Display version
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Version
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -122,8 +118,7 @@ Save current color scheme
 ```yaml
 Type: String
 Parameter Sets: Output
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: None
@@ -138,8 +133,7 @@ Specify path to ColorTool
 ```yaml
 Type: String
 Parameter Sets: (All)
-? Aliases
-
+Aliases:
 Required: False
 Position: Named
 Default value: (Get-Item $PROFILE).Directory.FullName
@@ -156,7 +150,6 @@ The cmdlet is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
-
 Required: False
 Position: Named
 Default value: None

@@ -55,8 +55,7 @@ Suppress output of color scheme table.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Apply, Xterm
-? Aliases
-
+Aliases:
 Required: False
 Position: Named
 Default value: False
@@ -74,8 +73,7 @@ For that, you'll need to open the properties sheet and hit "Ok".
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Apply
-? Aliases
-
+Aliases:
 Required: False
 Position: Named
 Default value: False
@@ -93,8 +91,7 @@ For that, you'll need to open the properties sheet, select Defaults and hit "Ok"
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Defaults
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -109,8 +106,7 @@ Change current color scheme and output ANSI escape sequences for use in WSL cons
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Xterm
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -125,8 +121,7 @@ Display version
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Version
-? Aliases
-
+Aliases:
 Required: True
 Position: Named
 Default value: False
@@ -144,8 +139,7 @@ For that, you'll need to open the properties sheet and hit "Ok".
 ```yaml
 Type: String
 Parameter Sets: Apply, Xterm, Defaults
-? Aliases
-
+Aliases:
 Required: True
 Position: 1
 Default value: None
@@ -160,8 +154,7 @@ Specify path to ColorTool
 ```yaml
 Type: String
 Parameter Sets: (All)
-? Aliases
-
+Aliases:
 Required: False
 Position: Named
 Default value: (Get-Item $PROFILE).Directory.FullName
@@ -178,7 +171,6 @@ The cmdlet is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
-
 Required: False
 Position: Named
 Default value: None
@@ -194,7 +186,6 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
-
 Required: False
 Position: Named
 Default value: None

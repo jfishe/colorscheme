@@ -1,6 +1,6 @@
 <#PSScriptInfo
 
-.VERSION 0.1
+.VERSION 0.2
 
 .GUID b5e98ff4-086c-49f3-9108-852c28c79ef5
 
@@ -37,28 +37,9 @@
 #>
 param()
 
+# .ExternalHelp colorschem-help.xml
 function Set-ColorScheme
 {
-<#
-.Synopsis
-Set console color scheme using Microsoft ColorTool
-
-.Description
-Change the current and/or default console color scheme using ColorTool.
-
-Specify a colorscheme in INI or itermcolors format. The module assumes the color scheme is in the schemes/ directory installed with ColorTool, unless a path to the scheme is specified.
-
-.Notes
-Microsoft provides pre-built ColorTool binaries or you can build from source. See RELATED LINKS. Install any additional schemes in the schemes/ folder included with ColorTool.
-
-The module assumes that ColorTool and schemes/ are installed in the same directory as $PROFILE or in $env:PATH.
-
-.Link
-https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md
-
-.Link
-https://github.com/Microsoft/console/tree/master/tools/ColorTool
-#>
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Apply')]
   param(
     # Suppress output of color scheme table.
@@ -150,30 +131,9 @@ https://github.com/Microsoft/console/tree/master/tools/ColorTool
   }
 }
 
+# .ExternalHelp colorschem-help.xml
 function Get-ColorScheme
 {
-<#
-.Synopsis
-Get current console color scheme using Microsoft ColorTool.
-
-.Description
-Display the current or available color schemes installed with ColorTool.
-
-Output the current color scheme in ColorTool INI format.
-
-.Notes
-Microsoft provides pre-built ColorTool binaries or you can build from source. See RELATED LINKS. Install any additional schemes in the schemes/ folder included with ColorTool.
-
-The module assumes that ColorTool and schemes/ are installed in the same directory as $PROFILE or in $env:PATH.
-
-.Link
-https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md
-
-.Link
-https://github.com/Microsoft/console/tree/master/tools/ColorTool
-
-
-#>
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Current')]
   param(
     # Display help
