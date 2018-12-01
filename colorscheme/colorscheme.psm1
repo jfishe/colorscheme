@@ -37,7 +37,6 @@
 #>
 param()
 
-# .ExternalHelp colorschem-help.xml
 function Set-ColorScheme
 {
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Apply')]
@@ -68,8 +67,6 @@ function Set-ColorScheme
     [switch]$Version,
 
     # Change current console color scheme.
-    #
-    # This does NOT save the properties automatically. For that, you'll need to open the properties sheet and hit "Ok".
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Apply')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Defaults')]
     [Parameter(Position = 0,Mandatory = $true,ParameterSetName='Xterm')]
@@ -131,7 +128,6 @@ function Set-ColorScheme
   }
 }
 
-# .ExternalHelp colorschem-help.xml
 function Get-ColorScheme
 {
   [CmdletBinding(SupportsShouldProcess,ConfirmImpact = 'Medium', PositionalBinding=$false, DefaultParametersetName='Current')]
