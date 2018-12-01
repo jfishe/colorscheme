@@ -15,31 +15,31 @@ Get current console color scheme using Microsoft ColorTool.
 
 ### Current (Default)
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Get-ColorScheme [-Current] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Help
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Get-ColorScheme [-Help] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Schemes
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Get-ColorScheme [-Schemes] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Version
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Get-ColorScheme [-Version] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Output
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Get-ColorScheme -Output <String> [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -165,7 +165,6 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
-
 Required: False
 Position: Named
 Default value: None
@@ -176,6 +175,7 @@ Accept wildcard characters: False
 ### CommonParameters
 
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+
 For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
@@ -192,6 +192,4 @@ The module assumes that ColorTool and schemes/ are installed in the same directo
 
 ## RELATED LINKS
 
-[https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md](https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md)
-
-[https://github.com/Microsoft/console/tree/master/tools/ColorTool](https://github.com/Microsoft/console/tree/master/tools/ColorTool)
+[Microsoft Console ColorTool](https://github.com/Microsoft/console/tree/master/tools/ColorTool)

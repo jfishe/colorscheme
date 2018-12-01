@@ -15,27 +15,27 @@ Set console color scheme using Microsoft ColorTool
 
 ### Apply (Default)
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Set-ColorScheme [-Quiet] [-Both] [-SchemeName] <String> [-Path <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Xterm
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Set-ColorScheme [-Quiet] [-Xterm] [-SchemeName] <String> [-Path <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Defaults
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Set-ColorScheme [-Defaults] [-SchemeName] <String> [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Version
 
-```
+``` {contenteditable="false" spellcheck="false" caption="powershell" .powershell}
 Set-ColorScheme [-Version] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -212,6 +212,4 @@ The module assumes that ColorTool and schemes/ are installed in the same directo
 
 ## RELATED LINKS
 
-[https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md](https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md)
-
-[https://github.com/Microsoft/console/tree/master/tools/ColorTool](https://github.com/Microsoft/console/tree/master/tools/ColorTool)
+[Microsoft Console ColorTool](https://github.com/Microsoft/console/tree/master/tools/ColorTool)

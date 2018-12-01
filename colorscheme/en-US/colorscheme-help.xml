@@ -365,11 +365,11 @@
     <command:examples />
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md</maml:linkText>
+        <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://github.com/jfishe/colorscheme/blob/master/docs/Get-ColorScheme.md</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/Microsoft/console/tree/master/tools/ColorTool</maml:linkText>
+        <maml:linkText>Microsoft Console ColorTool</maml:linkText>
         <maml:uri>https://github.com/Microsoft/console/tree/master/tools/ColorTool</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -768,11 +768,11 @@
     <command:examples />
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md</maml:linkText>
+        <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://github.com/jfishe/colorscheme/blob/master/docs/Set-ColorScheme.md</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/Microsoft/console/tree/master/tools/ColorTool</maml:linkText>
+        <maml:linkText>Microsoft Console ColorTool</maml:linkText>
         <maml:uri>https://github.com/Microsoft/console/tree/master/tools/ColorTool</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
