@@ -1,50 +1,41 @@
-$colortool = Get-Command -Name "colortool"
+Function Get-ColorScheme()
+{
+  [CmdletBinding()]
+  Param()
 
-Function Set-ColorScheme {
+  Begin {
+    $colortool = Get-Command -Name "colortool"
+  }
+  Process {
+    $colortool.Path |
+      ForEach-Object -Process {(Get-Item $_).Directory} |
+      ForEach-Object -Process {Get-ChildItem $_ -Name "schemes/*.itermcolors"}
+  }
 
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Low')]
-    Param(
-      # [Parameter(Mandatory=$false)]
-      # $Scheme
-    )
-      DynamicParam {
-        # https://foxdeploy.com/2017/01/13/adding-tab-completion-to-your-powershell-functions/
-        # Set the dynamic parameters' name
-        $ParameterName = 'Scheme'
+}
 
-        # Create the dictionary
-        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+Function Set-ColorScheme()
+{
 
-        # Create the collection of attributes
-        $AttributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Low')]
+  Param(
+    [Parameter(Mandatory=$false)]
+    [ArgumentCompleter(
+      {
+        #https://vexx32.github.io/2018/11/29/Dynamic-ValidateSet/
+        Param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
 
-        # Create and set the parameters' attributes
-        $ParameterAttribute = New-Object System.Management.Automation.ParameterAttribute
-        $ParameterAttribute.Mandatory = $false
-        # $ParameterAttribute.Position = 1
-
-        # Add the attributes to the attributes collection
-        $AttributeCollection.Add($ParameterAttribute)
-
-        # Generate and set the ValidateSet
-        # $arrSet = Get-WmiObject Win32_Service -ComputerName $computername | select -ExpandProperty Name
-        $arrSet = $colortool.Path |
-          ForEach-Object -Process {(Get-Item $_).Directory} |
-          ForEach-Object -Process {Get-ChildItem $_ -Name "schemes/*.itermcolors"}
-        $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($arrSet)
-
-        # Add the ValidateSet to the attributes collection
-        $AttributeCollection.Add($ValidateSetAttribute)
-
-        # Create and return the dynamic parameter
-        $RuntimeParameter = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $AttributeCollection)
-        $RuntimeParameterDictionary.Add($ParameterName, $RuntimeParameter)
-        return $RuntimeParameterDictionary
-    }
-    Begin {
-      # Bind the parameter to a friendly variable
-      $Scheme = $PsBoundParameters[$ParameterName]
-
+        Get-ColorScheme
+      }
+    )]
+    [ValidateScript(
+      {
+              $_ -in (Get-ColorScheme)
+      }
+    )]
+    [string] $Scheme
+  )
+  Begin {
       $colortool = Get-Command -Name "colortool"
       $ColorSchemes = $colortool.Path |
         ForEach-Object -Process {(Get-Item $_).Directory} |
@@ -53,7 +44,7 @@ Function Set-ColorScheme {
       $ConfirmMessage = @("Change console color scheme to",
           $ColorSchemes[$colorscheme]
           )
-    }
+  }
     Process {
         if ($PSCmdlet.ShouldProcess($ConfirmMessage)) {
             $env:COLORSCHEME = $colorscheme
