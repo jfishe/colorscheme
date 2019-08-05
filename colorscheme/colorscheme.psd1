@@ -12,7 +12,7 @@
 RootModule = 'colorscheme.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.3'
+ModuleVersion = '1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -57,7 +57,7 @@ Description = 'Wrapper for Microsoft console ColorTool'
 # RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-# ScriptsToProcess = @()
+# ScriptsToProcess = 'Set-ColorScheme.ps1', 'Get-ColorScheme.ps1'
 
 # Type files (.ps1xml) to be loaded when importing this module
 # TypesToProcess = @()
@@ -69,8 +69,8 @@ Description = 'Wrapper for Microsoft console ColorTool'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Set-ColorScheme',
-                    'Get-ColorScheme'
+# FunctionsToExport = 'Set-ColorScheme',
+#                     'Get-ColorScheme'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

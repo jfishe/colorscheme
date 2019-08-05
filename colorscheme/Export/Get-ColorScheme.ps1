@@ -1,3 +1,34 @@
+<#PSScriptInfo
+
+.VERSION 1.0
+
+.GUID 97a77855-1a24-4d76-9341-510a388fc446
+
+.AUTHOR jdfenw@gmail.com
+
+.COMPANYNAME John D. Fisher
+
+.COPYRIGHT (c) 2018  John D. Fisher
+
+.TAGS 
+
+.LICENSEURI https://github.com/jfishe/colorscheme/blob/master/LICENSE.md
+
+.PROJECTURI https://github.com/jfishe/colorscheme
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS 
+
+.EXTERNALSCRIPTDEPENDENCIES 
+
+.RELEASENOTES
+
+
+#>
+
 <#
 .SYNOPSIS
 

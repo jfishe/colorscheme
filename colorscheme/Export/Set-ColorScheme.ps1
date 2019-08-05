@@ -1,3 +1,35 @@
+
+<#PSScriptInfo
+
+.VERSION 1.0
+
+.GUID 82513484-a220-4007-aee1-2f5fad1ca0a1
+
+.AUTHOR jdfenw@gmail.com
+
+.COMPANYNAME John D. Fisher
+
+.COPYRIGHT (c) 2018  John D. Fisher
+
+.TAGS 
+
+.LICENSEURI https://github.com/jfishe/colorscheme/blob/master/LICENSE.md
+
+.PROJECTURI https://github.com/jfishe/colorscheme
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS 
+
+.EXTERNALSCRIPTDEPENDENCIES 
+
+.RELEASENOTES
+
+
+#>
+
 <#
 .SYNOPSIS
 
@@ -67,4 +99,4 @@ Function Set-ColorScheme()
         }
     }
 }
-Set-Alias -Name yob -Value Set-ColorScheme
+# Set-Alias -Name yob -Value Set-ColorScheme
